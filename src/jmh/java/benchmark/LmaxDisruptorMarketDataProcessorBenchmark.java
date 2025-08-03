@@ -17,12 +17,9 @@ public class LmaxDisruptorMarketDataProcessorBenchmark {
 
     @Setup(Level.Iteration)
     public void setup() {
-        processor = new LmaxDisruptorMarketDataProcessor() {
-            @Override
-            public void publishAggregatedMarketData(MarketData data) {
-                // No-op for benchmarking
-            }
-        };
+        processor = new LmaxDisruptorMarketDataProcessor(data -> {
+            // No-op for benchmarking
+        });
     }
 
     @TearDown(Level.Iteration)

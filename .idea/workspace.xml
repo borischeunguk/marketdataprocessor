@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28d0ef72-9f99-4542-b721-2a9b3b7db730" name="Changes" comment="update simple and event based ( blockingQueue ) solution">
+    <list default="true" id="28d0ef72-9f99-4542-b721-2a9b3b7db730" name="Changes" comment="update disruptor solution">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/disruptor/LmaxDisruptorMarketDataProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/disruptor/LmaxDisruptorMarketDataProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/disruptor/MarketDataEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/disruptor/MarketDataEventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/disruptor/LmaxDisruptorMarketDataProcessorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/disruptor/LmaxDisruptorMarketDataProcessorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmark/LmaxDisruptorMarketDataProcessorBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmark/LmaxDisruptorMarketDataProcessorBenchmark.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,7 +237,14 @@
       <option name="project" value="LOCAL" />
       <updated>1754235002075</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update disruptor solution">
+      <created>1754246961323</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1754246961323</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -256,6 +261,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first cut" />
     <MESSAGE value="update simple and event based ( blockingQueue ) solution" />
-    <option name="LAST_COMMIT_MESSAGE" value="update simple and event based ( blockingQueue ) solution" />
+    <MESSAGE value="update disruptor solution" />
+    <option name="LAST_COMMIT_MESSAGE" value="update disruptor solution" />
   </component>
 </project>
