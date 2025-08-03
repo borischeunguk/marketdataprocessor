@@ -1,7 +1,7 @@
 package benchmark;
 
 import org.openjdk.jmh.annotations.*;
-import standard.MarketDataProcessor;
+import standard.SimpleMarketDataProcessor;
 import utils.MarketData;
 
 import java.util.concurrent.TimeUnit;
@@ -15,14 +15,14 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Thread)
-public class MarketDataProcessorBenchmark {
+public class SimpleMarketDataProcessorBenchmark {
 
-    private MarketDataProcessor nativeProcessor;
+    private SimpleMarketDataProcessor nativeProcessor;
 //    private DisruptorMarketDataProcessor disruptorProcessor;
 
     @Setup
     public void setup() {
-        nativeProcessor = new MarketDataProcessor();
+        nativeProcessor = new SimpleMarketDataProcessor();
 //        disruptorProcessor = new DisruptorMarketDataProcessor();
     }
 

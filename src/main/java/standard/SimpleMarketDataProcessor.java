@@ -8,19 +8,18 @@ import java.util.concurrent.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class MarketDataProcessor {
+public class SimpleMarketDataProcessor {
 
     private final ConcurrentHashMap<String, MarketData> latestBySymbol = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Long> lastPublishedTime = new ConcurrentHashMap<>();
     private final Deque<Long> publishTimestamps = new ConcurrentLinkedDeque<>();
-
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     private static final int MAX_GLOBAL_RATE = 100; // max publishes/sec
     private static final long SYMBOL_PUBLISH_INTERVAL_MS = 1000; // 1/sec per symbol
     private static final long GLOBAL_WINDOW_MS = 1000; // sliding window
 
-    public MarketDataProcessor() {
+    public SimpleMarketDataProcessor() {
         scheduler.scheduleAtFixedRate(this::processAndPublish, 0, 10, TimeUnit.MILLISECONDS);
     }
 
