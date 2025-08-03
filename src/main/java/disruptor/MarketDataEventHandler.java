@@ -5,48 +5,80 @@ import utils.MarketData;
 
 import java.util.Deque;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.concurrent.*;
 
 public class MarketDataEventHandler implements EventHandler<MarketDataEvent> {
 
     private final Map<String, Long> lastPublishedPerSymbol = new ConcurrentHashMap<>();
     private final Deque<Long> publishTimestamps = new ConcurrentLinkedDeque<>();
+    private final Map<String, MarketData> latestDataBySymbol = new ConcurrentHashMap<>();
+    private final Set<String> retrySymbols = ConcurrentHashMap.newKeySet();
 
     private static final int MAX_GLOBAL_PUBLISHES_PER_SEC = 100;
     private static final long SYMBOL_COOLDOWN_MS = 1000;
     private static final long GLOBAL_WINDOW_MS = 1000;
 
     private final MarketDataConsumer publisher;
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     public MarketDataEventHandler(MarketDataConsumer publisher) {
         this.publisher = publisher;
+        scheduler.scheduleAtFixedRate(this::flushRetries, 50, 50, TimeUnit.MILLISECONDS);
     }
 
     @Override
     public void onEvent(MarketDataEvent event, long sequence, boolean endOfBatch) {
         MarketData data = event.data;
+        if (data == null) return;
+
+        String symbol = data.getSymbol();
+        latestDataBySymbol.put(symbol, data); // Always keep the latest
+
+        if (!tryPublish(symbol)) {
+            retrySymbols.add(symbol);
+        }
+    }
+
+    private boolean tryPublish(String symbol) {
         long now = System.currentTimeMillis();
 
-        // Clean up old timestamps (global throttle)
+        // Enforce global rate limit window
         while (!publishTimestamps.isEmpty() && now - publishTimestamps.peekFirst() > GLOBAL_WINDOW_MS) {
             publishTimestamps.pollFirst();
         }
 
         if (publishTimestamps.size() >= MAX_GLOBAL_PUBLISHES_PER_SEC) {
-            return; // Throttled globally
+            return false; // Global throttle
         }
 
-        // Per-symbol throttling
-        Long lastTime = lastPublishedPerSymbol.getOrDefault(data.getSymbol(), 0L);
-        if (now - lastTime < SYMBOL_COOLDOWN_MS) {
-            return;
+        Long lastPublished = lastPublishedPerSymbol.getOrDefault(symbol, 0L);
+        if (now - lastPublished < SYMBOL_COOLDOWN_MS) {
+            return false; // Per-symbol cooldown
         }
 
-        // Publish
-        publisher.publish(data);
+        MarketData latest = latestDataBySymbol.get(symbol);
+        if (latest == null) return true; // No data to publish
+
+        // ✅ Publish and update state
+        publisher.publish(latest);
+        lastPublishedPerSymbol.put(symbol, now);
         publishTimestamps.addLast(now);
-        lastPublishedPerSymbol.put(data.getSymbol(), now);
+
+        latestDataBySymbol.remove(symbol);
+        retrySymbols.remove(symbol);
+
+        return true;
+    }
+
+    private void flushRetries() {
+        for (String symbol : new HashSet<>(retrySymbols)) {
+            tryPublish(symbol);
+        }
+    }
+
+    public void shutdown() {
+        scheduler.shutdownNow();
     }
 }
-

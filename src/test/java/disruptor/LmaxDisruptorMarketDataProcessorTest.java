@@ -21,12 +21,7 @@ class LmaxDisruptorMarketDataProcessorTest {
         publishedData = new CopyOnWriteArrayList<>();
 
         // Anonymous subclass to override publish method for testing
-        processor = new LmaxDisruptorMarketDataProcessor() {
-            @Override
-            public void publishAggregatedMarketData(MarketData data) {
-                publishedData.add(data);
-            }
-        };
+        processor = new LmaxDisruptorMarketDataProcessor(publishedData::add);
     }
 
     @AfterEach
