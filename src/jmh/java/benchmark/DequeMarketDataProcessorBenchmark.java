@@ -1,7 +1,7 @@
 package benchmark;
 
 import org.openjdk.jmh.annotations.*;
-import standard.SimpleMarketDataProcessor;
+import standard.DequeMarketDataProcessor;
 import utils.MarketData;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -13,15 +13,20 @@ import java.util.concurrent.TimeUnit;
  * This benchmark focuses on measuring the throughput, latency, and
  * memory usage of the native processor.
  */
+@BenchmarkMode({Mode.Throughput, Mode.SampleTime})
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
 @State(Scope.Thread)
-public class SimpleMarketDataProcessorBenchmark {
+@Fork(1) // Only 1 fork
+@Warmup(iterations = 2, time = 10, timeUnit = TimeUnit.SECONDS) // ~20s warmup
+@Measurement(iterations = 3, time = 30, timeUnit = TimeUnit.SECONDS) // ~90s measurement
+public class DequeMarketDataProcessorBenchmark {
 
-    private SimpleMarketDataProcessor nativeProcessor;
+    private DequeMarketDataProcessor nativeProcessor;
     private final String[] symbols = {"AAPL", "BTC", "ETH"};
 
     @Setup
     public void setup() {
-        nativeProcessor = new SimpleMarketDataProcessor();
+        nativeProcessor = new DequeMarketDataProcessor();
     }
 
     private MarketData randomMarketData() {
@@ -32,18 +37,12 @@ public class SimpleMarketDataProcessorBenchmark {
     }
 
     @Benchmark
-    @BenchmarkMode(Mode.Throughput)
-    @OutputTimeUnit(TimeUnit.SECONDS)
     public void nativeThroughput() {
         nativeProcessor.onMessage(randomMarketData());
     }
 
     @Benchmark
-    @BenchmarkMode(Mode.SampleTime)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public void nativeLatency() {
         nativeProcessor.onMessage(randomMarketData());
     }
 }
-
-

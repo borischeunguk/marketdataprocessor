@@ -9,15 +9,15 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EventBasedMarketDataProcessorTest {
-    private EventBasedMarketDataProcessor processor;
+class BlockingQueueMarketDataProcessorTest {
+    private BlockingQueueMarketDataProcessor processor;
     private List<MarketData> publishedData;
 
     @BeforeEach
     void setUp() {
         publishedData = new CopyOnWriteArrayList<>();
 
-        processor = new EventBasedMarketDataProcessor() {
+        processor = new BlockingQueueMarketDataProcessor() {
             @Override
             public void publishAggregatedMarketData(MarketData data) {
                 publishedData.add(data);

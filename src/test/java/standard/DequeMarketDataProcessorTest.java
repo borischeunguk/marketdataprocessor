@@ -11,9 +11,9 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SimpleMarketDataProcessorTest {
+class DequeMarketDataProcessorTest {
 
-    private SimpleMarketDataProcessor processor;
+    private DequeMarketDataProcessor processor;
     private List<MarketData> publishedData;
 
     @BeforeEach
@@ -21,7 +21,7 @@ class SimpleMarketDataProcessorTest {
         publishedData = new CopyOnWriteArrayList<>();
 
         // Anonymous subclass to override publish method for testing
-        processor = new SimpleMarketDataProcessor() {
+        processor = new DequeMarketDataProcessor() {
             @Override
             public void publishAggregatedMarketData(MarketData data) {
                 publishedData.add(data);

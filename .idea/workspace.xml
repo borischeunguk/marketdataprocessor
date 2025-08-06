@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28d0ef72-9f99-4542-b721-2a9b3b7db730" name="Changes" comment="fix the benchmark solution">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmark/SimpleMarketDataProcessorBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmark/SimpleMarketDataProcessorBenchmark.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/eventdriven/EventBasedMarketDataProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eventdriven/EventBasedMarketDataProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/standard/SimpleMarketDataProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/standard/SimpleMarketDataProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmark/SimpleMarketDataProcessorBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmark/DequeMarketDataProcessorBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/eventdriven/EventBasedMarketDataProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eventdriven/BlockingQueueMarketDataProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/standard/SimpleMarketDataProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/standard/DequeMarketDataProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/eventdriven/EventBasedMarketDataProcessorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/eventdriven/BlockingQueueMarketDataProcessorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/standard/SimpleMarketDataProcessorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/standard/DequeMarketDataProcessorTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,8 +92,8 @@
       <recent name="$PROJECT_DIR$/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.market-data-processor [jmh]">
-    <configuration name="EventBasedMarketDataProcessorTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.LmaxDisruptorMarketDataProcessorTest">
+    <configuration name="BlockingQueueMarketDataProcessorTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -105,7 +106,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;eventdriven.EventBasedMarketDataProcessorTest&quot;" />
+            <option value="&quot;eventdriven.BlockingQueueMarketDataProcessorTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -115,7 +116,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="EventDrivenMarketDataProcessorTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="DequeMarketDataProcessorTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -128,7 +129,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;eventdriven.EventDrivenMarketDataProcessorTest&quot;" />
+            <option value="&quot;standard.DequeMarketDataProcessorTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -138,7 +139,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="EventDrivenMarketDataProcessorTest.testSingleSymbolThrottling" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="DequeMarketDataProcessorTest.testNoDuplicateSymbolPublishWithinInterval" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -151,7 +152,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;eventdriven.EventDrivenMarketDataProcessorTest.testSingleSymbolThrottling&quot;" />
+            <option value="&quot;standard.DequeMarketDataProcessorTest.testNoDuplicateSymbolPublishWithinInterval&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -184,7 +185,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="SimpleMarketDataProcessorTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="LmaxDisruptorMarketDataProcessorTest.testNoDuplicateSymbolPublishWithinInterval" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -197,7 +198,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;standard.SimpleMarketDataProcessorTest&quot;" />
+            <option value="&quot;disruptor.LmaxDisruptorMarketDataProcessorTest.testNoDuplicateSymbolPublishWithinInterval&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -231,10 +232,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.LmaxDisruptorMarketDataProcessorTest" />
-        <item itemvalue="Gradle.SimpleMarketDataProcessorTest" />
-        <item itemvalue="Gradle.EventBasedMarketDataProcessorTest" />
-        <item itemvalue="Gradle.EventDrivenMarketDataProcessorTest" />
-        <item itemvalue="Gradle.EventDrivenMarketDataProcessorTest.testSingleSymbolThrottling" />
+        <item itemvalue="Gradle.LmaxDisruptorMarketDataProcessorTest.testNoDuplicateSymbolPublishWithinInterval" />
+        <item itemvalue="Gradle.BlockingQueueMarketDataProcessorTest" />
+        <item itemvalue="Gradle.DequeMarketDataProcessorTest" />
+        <item itemvalue="Gradle.DequeMarketDataProcessorTest.testNoDuplicateSymbolPublishWithinInterval" />
       </list>
     </recent_temporary>
   </component>
@@ -275,7 +276,14 @@
       <option name="project" value="LOCAL" />
       <updated>1754247206997</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix the benchmark solution">
+      <created>1754512179011</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1754512179011</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
