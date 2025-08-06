@@ -8,6 +8,16 @@ import java.util.concurrent.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
+/**
+ * SimpleMarketDataProcessor is responsible for processing and publishing market data
+ * while adhering to rate limits for both global and per-symbol publishing.
+ *
+ * Key Features:
+ * - Maintains the latest market data for each symbol.
+ * - Enforces a global publish rate limit (MAX_GLOBAL_RATE).
+ * - Enforces a per-symbol publish interval (SYMBOL_PUBLISH_INTERVAL_MS).
+ * - Uses a sliding window for global rate limiting.
+ */
 public class SimpleMarketDataProcessor {
 
     private final ConcurrentHashMap<String, MarketData> latestBySymbol = new ConcurrentHashMap<>();
@@ -23,12 +33,26 @@ public class SimpleMarketDataProcessor {
         scheduler.scheduleAtFixedRate(this::processAndPublish, 0, 10, TimeUnit.MILLISECONDS);
     }
 
-    // Receive incoming market data
+    /**
+     * Receives incoming market data and stores it in a thread-safe map.
+     * The assumption is that unique symbols dont exceed the global rate limit.
+     * I.E. the onMessage will NOT publish more than MAX_GLOBAL_RATE unique symbols per second.
+     *
+     * Time Complexity: O(1) - ConcurrentHashMap put operation is O(1) on average.
+     * Space Complexity: O(n) - Where n is the number of unique symbols being tracked.
+     *
+     * @param data The incoming market data to process.
+     */
     public void onMessage(MarketData data) {
         latestBySymbol.put(data.getSymbol(), data);
     }
 
-    // Periodically called by scheduler
+    /**
+     * Periodically processes and publishes market data while adhering to rate limits.
+     *
+     * Time Complexity: O(s) - Where s is the number of symbols in the latestBySymbol map.
+     * Space Complexity: O(n) - Maintains a sliding window of timestamps and maps for symbols.
+     */
     private void processAndPublish() {
         long now = System.currentTimeMillis();
 

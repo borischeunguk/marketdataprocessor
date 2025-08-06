@@ -9,7 +9,7 @@ public class EventBasedMarketDataProcessor {
 
     private final BlockingQueue<MarketData> queue = new LinkedBlockingQueue<>();
     private final ConcurrentHashMap<String, MarketData> latestBySymbol = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, Long> lastPublished = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Long> lastPublishedTime = new ConcurrentHashMap<>();
     private final Deque<Long> publishTimestamps = new ConcurrentLinkedDeque<>();
     private final ScheduledExecutorService flushScheduler = Executors.newSingleThreadScheduledExecutor();
     private final Thread worker;
@@ -56,13 +56,13 @@ public class EventBasedMarketDataProcessor {
         for (String symbol : latestBySymbol.keySet()) {
             if (published >= remainingQuota) break;
 
-            long last = lastPublished.getOrDefault(symbol, 0L);
+            long last = lastPublishedTime.getOrDefault(symbol, 0L);
             if (now - last < 1000) continue;
 
             MarketData data = latestBySymbol.remove(symbol);
             if (data != null) {
                 publishAggregatedMarketData(data);
-                lastPublished.put(symbol, now);
+                lastPublishedTime.put(symbol, now);
                 publishTimestamps.addLast(now);
                 published++;
             }

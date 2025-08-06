@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28d0ef72-9f99-4542-b721-2a9b3b7db730" name="Changes" comment="update disruptor solution">
+    <list default="true" id="28d0ef72-9f99-4542-b721-2a9b3b7db730" name="Changes" comment="fix the benchmark solution">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmark/LmaxDisruptorMarketDataProcessorBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmark/LmaxDisruptorMarketDataProcessorBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmark/SimpleMarketDataProcessorBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmark/SimpleMarketDataProcessorBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/eventdriven/EventBasedMarketDataProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eventdriven/EventBasedMarketDataProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/standard/SimpleMarketDataProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/standard/SimpleMarketDataProcessor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,13 +77,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/jmh/java" />
@@ -88,7 +91,7 @@
       <recent name="$PROJECT_DIR$/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.LmaxDisruptorMarketDataProcessorTest">
+  <component name="RunManager" selected="Gradle.market-data-processor [jmh]">
     <configuration name="EventBasedMarketDataProcessorTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -204,6 +207,27 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="market-data-processor [jmh]" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="-PjmhArgs='-prof gc -prof stack'" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jmh" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.LmaxDisruptorMarketDataProcessorTest" />
@@ -244,7 +268,14 @@
       <option name="project" value="LOCAL" />
       <updated>1754246961323</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix the benchmark solution">
+      <created>1754247206997</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1754247206997</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -262,6 +293,7 @@
     <MESSAGE value="first cut" />
     <MESSAGE value="update simple and event based ( blockingQueue ) solution" />
     <MESSAGE value="update disruptor solution" />
-    <option name="LAST_COMMIT_MESSAGE" value="update disruptor solution" />
+    <MESSAGE value="fix the benchmark solution" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix the benchmark solution" />
   </component>
 </project>
