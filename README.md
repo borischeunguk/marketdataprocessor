@@ -50,6 +50,22 @@ Benchmarking is done via [JMH](https://openjdk.org/projects/code-tools/jmh/). It
 
 See `benchmark/` directory for full JMH test suites.
 
+## Assumptions
+- onMessage() is always called from a single thread, it will NOT receive more than MAX_GLOBAL_RATE unique symbols per second.
+- publishAggregatedMarketData() or related functions like processAndPublish, tryPublish may run in parallel (i.e. multiple consumer threads).
+- If there's only one consumer, some locks or synchronization structures can be optimized away for better performance.
+
+## Known Issues
+- The test testNoDuplicateSymbolPublishWithinInterval is flaky due to reliance on Thread.sleep() timing. May fail occasionally depending on system scheduling.
+- There’s no current mechanism to clean up or cap internal maps (latestBySymbol, lastPublishedTime) if symbols go stale over time.
+
+## Future Improvements
+- Experiment with RingBufferUnsafe in LMAX Disruptor for further latency gains.
+- Explore commercial options like CoralSequencer (if license allows).
+- Clean up common logic and extract reusable components.
+- Improve JMH benchmark coverage: include deeper measurement of publishAggregatedMarketData, processAndPublish, and tryPublish.
+Add GC pressure and memory profiling.
+
 ## Setup
 
 ```bash
