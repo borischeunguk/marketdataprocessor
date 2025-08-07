@@ -1,29 +1,26 @@
 package benchmark;
 
-import disruptor.LmaxDisruptorMarketDataProcessor;
+import eventdriven.BlockingQueueMarketDataProcessor;
 import org.openjdk.jmh.annotations.*;
 import utils.MarketData;
 
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-import java.util.List;
 
 @BenchmarkMode({Mode.Throughput, Mode.SampleTime})
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
-@Warmup(iterations = 2, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 3, time = 2, timeUnit = TimeUnit.SECONDS)
-@Fork(1)
 @State(Scope.Thread)
-public class LmaxDisruptorMarketDataProcessorBenchmark {
+@Fork(1) // Only 1 fork
+@Warmup(iterations = 2, time = 10, timeUnit = TimeUnit.SECONDS) // ~20s warmup
+@Measurement(iterations = 3, time = 30, timeUnit = TimeUnit.SECONDS) // ~90s measurement
+public class BlockingQueueMarketDataProcessorBenchmark {
 
-    private LmaxDisruptorMarketDataProcessor processor;
+    private BlockingQueueMarketDataProcessor processor;
     private final String[] symbols = {"AAPL", "BTC", "ETH"};
-    private final List<MarketData> publishedData = new CopyOnWriteArrayList<>();
 
-    @Setup
+    @Setup(Level.Iteration)
     public void setup() {
-        processor = new LmaxDisruptorMarketDataProcessor(publishedData::add);
+        processor = new BlockingQueueMarketDataProcessor();
     }
 
     private MarketData randomMarketData() {
@@ -34,22 +31,17 @@ public class LmaxDisruptorMarketDataProcessorBenchmark {
     }
 
     @Benchmark
-    public void disruptorThroughput() {
+    public void throughput() {
         processor.onMessage(randomMarketData());
     }
 
     @Benchmark
-    public void disruptorLatency() {
+    public void latency() {
         processor.onMessage(randomMarketData());
     }
 
     @TearDown(Level.Iteration)
     public void tearDown() {
-        publishedData.clear();
-    }
-
-    @TearDown(Level.Trial)
-    public void shutdown() {
         processor.shutdown();
     }
 }

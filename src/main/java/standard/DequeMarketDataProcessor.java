@@ -12,6 +12,10 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  * SimpleMarketDataProcessor is responsible for processing and publishing market data
  * while adhering to rate limits for both global and per-symbol publishing.
  *
+ * Assumptions:
+ * - The system will not receive more than MAX_GLOBAL_RATE unique symbols per second.
+ * - Only one thread calls the onMessage() function, I.E. single producer.
+ * - The processAndPublish method can be called by multiple threads,I.E. multi-consumer.
  * Key Features:
  * - Maintains the latest market data for each symbol.
  * - Enforces a global publish rate limit (MAX_GLOBAL_RATE).
@@ -20,8 +24,11 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  */
 public class DequeMarketDataProcessor {
 
-    private final ConcurrentHashMap<String, MarketData> latestBySymbol = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, Long> lastPublishedTime = new ConcurrentHashMap<>();
+    private final Map<String, MarketData> latestBySymbol = new ConcurrentHashMap<>();
+    /**
+     * if single consumer is guaranteed, we can use a simple HashMap and ArrayDeque.
+     */
+    private final Map<String, Long> lastPublishedTime = new ConcurrentHashMap<>();
     // Alternatively could use ArrayBlockingQueue for better memory efficiency
     private final Deque<Long> publishTimestamps = new ConcurrentLinkedDeque<>();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();

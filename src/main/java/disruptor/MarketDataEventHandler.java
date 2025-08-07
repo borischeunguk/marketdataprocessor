@@ -9,6 +9,12 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.concurrent.*;
 
+/**
+ * MarketDataEventHandler processes market data events with rate limiting
+ * and ensures the latest data is published
+ * while adhering to global and per-symbol constraints.
+ *
+ */
 public class MarketDataEventHandler implements EventHandler<MarketDataEvent> {
 
     private final Map<String, Long> lastPublishedPerSymbol = new ConcurrentHashMap<>();
