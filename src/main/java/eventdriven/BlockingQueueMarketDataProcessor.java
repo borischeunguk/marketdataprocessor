@@ -13,8 +13,8 @@ import java.util.concurrent.*;
  */
 public class BlockingQueueMarketDataProcessor {
 
-    private final ConcurrentHashMap<String, MarketData> latestBySymbol = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, Long> lastPublishedTime = new ConcurrentHashMap<>();
+    private final Map<String, MarketData> latestBySymbol = new ConcurrentHashMap<>();
+    private final Map<String, Long> lastPublishedTime = new ConcurrentHashMap<>();
     private final BlockingQueue<Long> publishTimestamps = new ArrayBlockingQueue<>(MAX_GLOBAL_RATE + 10);
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
